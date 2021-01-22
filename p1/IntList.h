@@ -11,13 +11,13 @@ struct IntList<> {
     constexpr static int size = 0;
 };
 
-/*template<int i>
+template<int i>
 struct IntList<i> {
     constexpr static int head = i;
     typedef IntList<> next;
     constexpr static bool empty = false;
     constexpr static int size = 1;
-};*/
+};
 
 template<int i, int... IL>
 struct IntList<i, IL...> {

@@ -1,12 +1,13 @@
 #include <iostream>
 #include "p1/IntList.h"
 #include "p1/MergedIntLists.h"
+#include "p1/ConcatedIntLists.h"
 
 int main() {
 /**  *   ||           ***************************       ||   *******************
  *****  \||/                   IntList                 \||/  *******************
  *****   \/           ***************************       \/   **************** */
-/*
+
     static_assert(IntList<>::empty, "Failed!");
     static_assert(IntList<>::size == 0, "Failed!");
     //static_assert(IntList<>::head, "GOOD! please comment this line to continue");
@@ -27,7 +28,7 @@ int main() {
     static_assert(IntList<1>::size == 1, "Failed!");
     static_assert(IntList<1, 2>::size == 2, "Failed!");
     static_assert(IntList<1, 2>::next::next::empty, "Failed!");
-*/
+
 
 /**  *   ||           ***************************       ||   *******************
  *****  \||/                MergedIntLists             \||/  *******************
@@ -42,6 +43,20 @@ int main() {
     static_assert(MergedIntLists<IntList<1,2>,IntList<9>>::list::next::head == 9, "Failed!");
     static_assert(MergedIntLists<IntList<9>,IntList<1,2>>::list::head == 9, "Failed!");
     static_assert(MergedIntLists<IntList<9>,IntList<1,2>>::list::next::head == 1, "Failed!");
+
+
+/**  *   ||           ***************************       ||   *******************
+ *****  \||/                ConcatedIntLists           \||/  *******************
+ *****   \/           ***************************       \/   **************** */
+
+    static_assert(ConcatedIntLists<IntList<>>::list::empty, "Failed!");
+    //static_assert(ConcatedIntLists<IntList<1>>::list::empty, "GOOD! please comment this line to continue");
+    static_assert(ConcatedIntLists<IntList<1>>::list::head == 1, "Failed!");
+    static_assert(ConcatedIntLists<IntList<>, IntList<1>>::list::head == 1, "Failed!");
+    static_assert(ConcatedIntLists<IntList<1>, IntList<>>::list::head == 1, "Failed!");
+    static_assert(ConcatedIntLists<IntList<>, IntList<>>::list::empty, "Failed!");
+    static_assert(ConcatedIntLists<IntList<1,2>, IntList<3,4>, IntList<5,6>>::list::head == 1, "Failed!");
+    static_assert(ConcatedIntLists<IntList<1,2>, IntList<3,4>, IntList<5,6>, IntList<7,8>, IntList<>, IntList<9>>::list::next::head == 2, "Failed!");
 
     return 0;
 }

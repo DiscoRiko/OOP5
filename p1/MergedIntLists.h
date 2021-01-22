@@ -1,6 +1,7 @@
 #ifndef MERGEDLIST
 #define MERGEDLIST
 #include "IntList.h"
+#include "ConcatedIntLists.h"
 
 template<typename, typename>
 struct MergedIntLists;
@@ -22,7 +23,7 @@ struct MergedIntLists<IntList<>, IntList<IL...>> {
 
 template<int... IL1, int... IL2>
 struct MergedIntLists<IntList<IL1...>, IntList<IL2...>> {
-    typedef IntList<IntList<IL1...>::head, MergedIntLists<IntList<IL2...>, typename IntList<IL1...>::next>::list> list;
+    typedef typename ConcatedIntLists<IntList<IntList<IL1...>::head>, typename MergedIntLists<IntList<IL2...>, typename IntList<IL1...>::next>::list>::list list;
 };
 
 
