@@ -1,26 +1,50 @@
 #ifndef OBJECT_H_
 #define OBJECT_H_
 
+#include <string>
+#include <map>
+#include "Method.h"
+
+class Class;
+class Field;
+
+using namespace std;
+
 class Object {
 private:
 
+    Class* cls;
+
+    map<string, int> instance_int_fields;
+
+    map<string, Object*> instance_obj_fields;
+
+    map<string, int>* static_int_fields;
+
+    map<string, Object*>* static_obj_fields;
+
 public:
 
-	Class* getClass();
+    Object(Class* cls, const list<string>& instance_int_fields,
+           const list<string>& instance_obj_fields,
+           map<string, int>* static_int_fields,
+           map<string, Object*>* static_obj_fields);
 
-	int getInt(std::string name);
+    Class* getClass();
 
-	void setInt(std::string name, int value);
+	int getInt(string name);
+
+	void setInt(string name, int value);
 	
-	Object* getObj(std::string name);
+	Object* getObj(string name);
 
-	void setObj(std::string name, Object* value);
+	void setObj(string name, Object* value);
 
-	virtual void invokeMethod(std::string name);
+	virtual void invokeMethod(string name);
 
-	bool isInstanceOf(std::string c);
+	bool isInstanceOf(string c);
 	
-	bool isKindOf(std::string c);
+	bool isKindOf(string c);
 
 };
 

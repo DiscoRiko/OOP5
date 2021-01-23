@@ -2,22 +2,22 @@
 #define METHOD_H_
 
 #include "Member.h"
+#include "Exceptions.h"
+
+class Object;
 
 typedef void(*Func)(Object*);
 
-class Method{
+class Method: public Member{
 private:
 
+    Func f;
 
 public:
 
-	std::string getDeclaringClass() const;
-
-	Method(std::string name,std::string className,Func f);
+	Method(string name,string className,Func f);
 
 	virtual void invoke(Object* const obj);
-	
-	std::string name() const;
 
 };
 
