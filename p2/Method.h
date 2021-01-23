@@ -1,8 +1,7 @@
-
 #ifndef METHOD_H_
 #define METHOD_H_
 
-
+#include "Member.h"
 
 typedef void(*Func)(Object*);
 

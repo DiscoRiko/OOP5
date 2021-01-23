@@ -1,16 +1,18 @@
-
 #ifndef FIELD_H_
 #define FIELD_H_
+
 #include "Exceptions.h"
+#include "Member.h"
 
-class Field  {
+class Field: public Member{
 private:
-
+    Type t;
+    bool isStatic;
 public:
-	Field(std::string name, std::string className, Type t, bool isStatic);
+	Field(string name, string className, Type t, bool isStatic);
 
 	Type getType();
-	
+
 	void setInt(Object* obj, int value);
 
 	int getInt(Object* obj);
@@ -18,12 +20,6 @@ public:
 	void setObj(Object* obj, Object* value);
 
 	Object* getObj(Object* obj);
-
-	std::string getDeclaringClass() const;
-	
-	std::string name() const;
-
-	
 };
 
 #endif /* FIELD_H_ */
