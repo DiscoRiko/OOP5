@@ -1,12 +1,13 @@
 #ifndef CLASS_H_
 #define CLASS_H_
 
-#include <list>
-#include "Object.h"
+#include "Field.h"
+#include "Method.h"
 
 class Class{
 
 private:
+    string class_name;
 
     list<string> instance_int_fields;
 
@@ -17,6 +18,7 @@ private:
     map<string, Object*>* static_obj_fields;
 
 public:
+    string name();
 /*
     Class(Class* c, const std::string& name);
 		
@@ -47,13 +49,6 @@ public:
 	void setObj(std::string name, Object* value);
 
 */
-    const list<string> &getSuperInstanceIntFields() const;
-
-    const list<string> &getSuperInstanceObjFields() const;
-
-    map<string, int> *getSuperStaticIntFields() const;
-
-    map<string, Object *> *getSuperStaticObjFields() const;
 };
 
 #endif /* CLASS_H_ */

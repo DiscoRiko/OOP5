@@ -3,17 +3,24 @@
 
 #include <string>
 #include <map>
-#include "Method.h"
+#include <list>
+#include "Exceptions.h"
+//#include "Method.h"
 
 class Class;
 class Field;
+class Method;
+class Object;
+
+typedef void(*Func)(Object*);
 
 using namespace std;
 
 class Object {
 private:
-
     Class* cls;
+
+    Object* super_object;
 
     map<string, int> instance_int_fields;
 
@@ -23,12 +30,16 @@ private:
 
     map<string, Object*>* static_obj_fields;
 
+    map<string, Func>* methods;
+
 public:
 
-    Object(Class* cls, const list<string>& instance_int_fields,
+    Object(Class* cls, Object* super_object,
+           const list<string>& instance_int_fields,
            const list<string>& instance_obj_fields,
            map<string, int>* static_int_fields,
-           map<string, Object*>* static_obj_fields);
+           map<string, Object*>* static_obj_fields,
+           map<string, Func>* methods);
 
     Class* getClass();
 

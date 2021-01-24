@@ -2,7 +2,7 @@
 #define FIELD_H_
 
 #include "Member.h"
-#include "Exceptions.h"
+//#include "Exceptions.h"
 #include "Object.h"
 
 class Field: public Member{

@@ -10,5 +10,6 @@ void Method::invoke(Object *const obj) {
     //TODO - need to search the method in the tree
     //if(!obj.isMethodKnown(this->name()))
     //    throw MethodNotFound();
-    this->f(obj);
+    //this->f(obj);
+    obj->invokeMethod(this->name());
 }
