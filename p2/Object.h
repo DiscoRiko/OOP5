@@ -5,7 +5,6 @@
 #include <map>
 #include <list>
 #include "Exceptions.h"
-//#include "Method.h"
 
 class Class;
 class Field;

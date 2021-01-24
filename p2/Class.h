@@ -4,6 +4,7 @@
 #include "Field.h"
 #include "Method.h"
 #include <algorithm>
+#include <stack>
 
 class Class{
 
@@ -21,6 +22,10 @@ private:
     map<string, Object*>* static_obj_fields;
 
     map<string, Func>* class_methods;
+
+    static bool accessible;
+
+    static stack<Object*> current_obj;
 
     template<class T>
     static bool naive_comparison (T first, T second);
@@ -65,6 +70,15 @@ public:
     map<string, Object *> *getStaticObjFields() const;
 
     map<string, Func> *getClassMethods() const;
+
+    static bool isAccessible();
+
+    // current object stack functions
+    static void push_current_obj(Object* obj);
+
+    static void pop_current_obj();
+
+    static Object* top_current_obj();
 };
 
 #endif /* CLASS_H_ */

@@ -23,7 +23,7 @@ Object::Object(Class *cls, Object* super_object,
 Class *Object::getClass() {
     return this->cls;
 }
-// TODO - in all next 4, should add accessible logic
+
 int Object::getInt(string name) {
     // Check if there is an obj field with that name
     map<string, Object*>::iterator inst_obj_iter = this->instance_obj_fields.find(name);
@@ -45,8 +45,12 @@ int Object::getInt(string name) {
         else
             return it->second;
     }
-    else
-        return it->second;
+    else {
+        if(!Class::isAccessible() && Class::top_current_obj() != this)
+            throw FieldNotAccessible();
+        else
+            return it->second;
+    }
 }
 
 void Object::setInt(string name, int value) {
@@ -72,8 +76,12 @@ void Object::setInt(string name, int value) {
         else
             it->second = value;
     }
-    else
-        it->second = value;
+    else {
+        if(!Class::isAccessible() && Class::top_current_obj() != this)
+            throw FieldNotAccessible();
+        else
+            it->second = value;
+    }
 }
 
 Object *Object::getObj(string name) {
@@ -99,8 +107,12 @@ Object *Object::getObj(string name) {
         else
             return it->second;
     }
-    else
-        return it->second;
+    else {
+        if(!Class::isAccessible() && Class::top_current_obj() != this)
+            throw FieldNotAccessible();
+        else
+            return it->second;
+    }
 }
 
 void Object::setObj(string name, Object *value) {
@@ -126,8 +138,12 @@ void Object::setObj(string name, Object *value) {
         else
             it->second = value;
     }
-    else
-        it->second = value;
+    else {
+        if(!Class::isAccessible() && Class::top_current_obj() != this)
+            throw FieldNotAccessible();
+        else
+            it->second = value;
+    }
 }
 
 void Object::invokeMethod(string name) {
@@ -139,8 +155,11 @@ void Object::invokeMethod(string name) {
         else
             this->super_object->invokeMethod(name);
     }
-    else
+    else {
+        Class::push_current_obj(this);
         it->second(this);
+        Class::pop_current_obj();
+    }
 }
 
 bool Object::isInstanceOf(string c) {

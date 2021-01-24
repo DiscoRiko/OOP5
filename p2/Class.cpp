@@ -4,6 +4,10 @@
 
 #include "Class.h"
 
+bool Class::accessible = false;
+stack<Object*> Class::current_obj;
+
+
 Class::Class(Class *c, const string &name) : super_class(c), class_name(name){
     this->static_int_fields = new map<string, int>;
     this->static_obj_fields = new map<string, Object*>;
@@ -211,6 +215,10 @@ Object *Class::getObj(string name) {
         return stat_obj_iter->second;
 }
 
+void Class::setAccessible(bool a) {
+    Class::accessible = a;
+}
+
 // Getters
 map<string, int> *Class::getStaticIntFields() const {
     return this->static_int_fields;
@@ -224,10 +232,25 @@ map<string, Func> *Class::getClassMethods() const {
     return this->class_methods;
 }
 
+bool Class::isAccessible() {
+    return Class::accessible;
+}
+
+void Class::push_current_obj(Object* obj) {
+    Class::current_obj.push(obj);
+}
+
+void Class::pop_current_obj() {
+    Class::current_obj.pop();
+}
+
+Object *Class::top_current_obj() {
+    if(Class::current_obj.empty())
+        return nullptr;
+    return Class::current_obj.top();
+}
+
 template<class T>
 bool Class::naive_comparison(T first, T second) {
     return true;
-}
-
-void Class::setAccessible(bool a) {
 }

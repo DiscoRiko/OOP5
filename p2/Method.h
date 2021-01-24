@@ -2,11 +2,7 @@
 #define METHOD_H_
 
 #include "Member.h"
-//#include "Exceptions.h"
 #include "Object.h"
-
-//class Object;
-//typedef void(*Func)(Object*);
 
 class Method: public Member{
 private:
