@@ -26,10 +26,8 @@ Class *Object::getClass() {
 // TODO - in all next 4, should add accessible logic
 int Object::getInt(string name) {
     // Check if there is an obj field with that name
-    map<string, Object*>::iterator inst_obj_iter;
-    map<string, Object*>::iterator stat_obj_iter;
-    inst_obj_iter = this->instance_obj_fields.find(name);
-    stat_obj_iter = this->cls->getStaticObjFields()->find(name);
+    map<string, Object*>::iterator inst_obj_iter = this->instance_obj_fields.find(name);
+    map<string, Object*>::iterator stat_obj_iter = this->cls->getStaticObjFields()->find(name);
     if(inst_obj_iter != this->instance_obj_fields.end() || stat_obj_iter != this->cls->getStaticObjFields()->end())
         throw TypeError();
 
@@ -134,8 +132,8 @@ void Object::setObj(string name, Object *value) {
 
 void Object::invokeMethod(string name) {
     map<string, Func>::iterator it;
-    it = this->cls->getMethods()->find(name);
-    if(it == this->cls->getMethods()->end()) {
+    it = this->cls->getClassMethods()->find(name);
+    if(it == this->cls->getClassMethods()->end()) {
         if(this->super_object == nullptr)
             throw MethodNotFound();
         else

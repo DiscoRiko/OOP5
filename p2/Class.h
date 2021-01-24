@@ -3,11 +3,14 @@
 
 #include "Field.h"
 #include "Method.h"
+#include <algorithm>
 
 class Class{
 
 private:
     string class_name;
+
+    Class* super_class;
 
     list<string> instance_int_fields;
 
@@ -17,46 +20,46 @@ private:
 
     map<string, Object*>* static_obj_fields;
 
-    map<string, Func>* methods;
+    map<string, Func>* class_methods;
 
 public:
+
+    Class(Class* c, const string& name);
+
     string name();
-/*
-    Class(Class* c, const std::string& name);
 		
 	Class* getSuperClass();
 	
 	Object* newInstance();
 
-	void addMethod(std::string name, Func func);
+	void addMethod(string name, Func func);
 	
-	void addInstanceField(std::string name, Type t);
+	void addInstanceField(string name, Type t);
 
-	void addStaticField(std::string name, Type t);
+	void addStaticField(string name, Type t);
 
-	Field getField(std::string name);
+	Field getField(string name);
 
-	std::list<Field> getFields();
+	Method getMethod(string name);
 
-	Method getMethod(std::string name);
+    list<Field> getFields();
 
-	std::list<Method> getMethods();
+	list<Method> getMethods();
 
-	int getInt(std::string name);
+	void setInt(string name, int value);
 
-	void setInt(std::string name, int value);
+    int getInt(string name);
 
-	Object* getObj(std::string name);
+    void setObj(string name, Object* value);
 
-	void setObj(std::string name, Object* value);
+    Object* getObj(string name);
 
-*/
-
+	// Getters
     map<string, int> *getStaticIntFields() const;
 
     map<string, Object *> *getStaticObjFields() const;
 
-    map<string, Func> *getMethods() const;
+    map<string, Func> *getClassMethods() const;
 };
 
 #endif /* CLASS_H_ */
