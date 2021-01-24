@@ -228,3 +228,6 @@ template<class T>
 bool Class::naive_comparison(T first, T second) {
     return true;
 }
+
+void Class::setAccessible(bool a) {
+}

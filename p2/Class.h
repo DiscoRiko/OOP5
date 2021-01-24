@@ -57,6 +57,8 @@ public:
 
     Object* getObj(string name);
 
+    static void setAccessible(bool a);
+
 	// Getters
     map<string, int> *getStaticIntFields() const;
 

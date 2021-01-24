@@ -40,7 +40,7 @@ int Object::getInt(string name) {
             if(this->super_object == nullptr)
                 throw FieldNotFound();
             else
-                this->super_object->getInt(name);
+                return this->super_object->getInt(name);
         }
         else
             return it->second;
@@ -94,7 +94,7 @@ Object *Object::getObj(string name) {
             if(this->super_object == nullptr)
                 throw FieldNotFound();
             else
-                this->super_object->getObj(name);
+                return this->super_object->getObj(name);
         }
         else
             return it->second;
