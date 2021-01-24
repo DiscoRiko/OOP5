@@ -7,15 +7,9 @@
 
 Object::Object(Class *cls, Object* super_object,
                const list<string>& instance_int_fields,
-               const list<string>& instance_obj_fields,
-               map<string,int>* static_int_fields,
-               map<string, Object*>* static_obj_fields,
-               map<string, Func>* methods) {
+               const list<string>& instance_obj_fields) {
     this->cls = cls;
     this->super_object = super_object;
-    this->static_int_fields = static_int_fields;
-    this->static_obj_fields = static_obj_fields;
-    this->methods = methods;
 
     for (auto const& field_name : instance_int_fields) {
         this->instance_int_fields[field_name] = 0;
@@ -35,16 +29,16 @@ int Object::getInt(string name) {
     map<string, Object*>::iterator inst_obj_iter;
     map<string, Object*>::iterator stat_obj_iter;
     inst_obj_iter = this->instance_obj_fields.find(name);
-    stat_obj_iter = this->static_obj_fields->find(name);
-    if(inst_obj_iter != this->instance_obj_fields.end() || stat_obj_iter != this->static_obj_fields->end())
+    stat_obj_iter = this->cls->getStaticObjFields()->find(name);
+    if(inst_obj_iter != this->instance_obj_fields.end() || stat_obj_iter != this->cls->getStaticObjFields()->end())
         throw TypeError();
 
     // Check if there is an int field with that name
     map<string, int>::iterator it;
     it = this->instance_int_fields.find(name);
     if(it == this->instance_int_fields.end()) {
-        it = this->static_int_fields->find(name);
-        if(it == this->static_int_fields->end()) {
+        it = this->cls->getStaticIntFields()->find(name);
+        if(it == this->cls->getStaticIntFields()->end()) {
             if(this->super_object == nullptr)
                 throw FieldNotFound();
             else
@@ -62,16 +56,16 @@ void Object::setInt(string name, int value) {
     map<string, Object*>::iterator inst_obj_iter;
     map<string, Object*>::iterator stat_obj_iter;
     inst_obj_iter = this->instance_obj_fields.find(name);
-    stat_obj_iter = this->static_obj_fields->find(name);
-    if(inst_obj_iter != this->instance_obj_fields.end() || stat_obj_iter != this->static_obj_fields->end())
+    stat_obj_iter = this->cls->getStaticObjFields()->find(name);
+    if(inst_obj_iter != this->instance_obj_fields.end() || stat_obj_iter != this->cls->getStaticObjFields()->end())
         throw TypeError();
 
     // Check if there is an int field with that name
     map<string, int>::iterator it;
     it = this->instance_int_fields.find(name);
     if(it == this->instance_int_fields.end()) {
-        it = this->static_int_fields->find(name);
-        if(it == this->static_int_fields->end()) {
+        it = this->cls->getStaticIntFields()->find(name);
+        if(it == this->cls->getStaticIntFields()->end()) {
             if(this->super_object == nullptr)
                 throw FieldNotFound();
             else
@@ -89,16 +83,16 @@ Object *Object::getObj(string name) {
     map<string, int>::iterator inst_int_iter;
     map<string, int>::iterator stat_int_iter;
     inst_int_iter = this->instance_int_fields.find(name);
-    stat_int_iter = this->static_int_fields->find(name);
-    if(inst_int_iter != this->instance_int_fields.end() || stat_int_iter != this->static_int_fields->end())
+    stat_int_iter = this->cls->getStaticIntFields()->find(name);
+    if(inst_int_iter != this->instance_int_fields.end() || stat_int_iter != this->cls->getStaticIntFields()->end())
         throw TypeError();
 
     // Check if there is an int field with that name
     map<string, Object*>::iterator it;
     it = this->instance_obj_fields.find(name);
     if(it == this->instance_obj_fields.end()) {
-        it = this->static_obj_fields->find(name);
-        if(it == this->static_obj_fields->end()) {
+        it = this->cls->getStaticObjFields()->find(name);
+        if(it == this->cls->getStaticObjFields()->end()) {
             if(this->super_object == nullptr)
                 throw FieldNotFound();
             else
@@ -116,16 +110,16 @@ void Object::setObj(string name, Object *value) {
     map<string, int>::iterator inst_int_iter;
     map<string, int>::iterator stat_int_iter;
     inst_int_iter = this->instance_int_fields.find(name);
-    stat_int_iter = this->static_int_fields->find(name);
-    if(inst_int_iter != this->instance_int_fields.end() || stat_int_iter != this->static_int_fields->end())
+    stat_int_iter = this->cls->getStaticIntFields()->find(name);
+    if(inst_int_iter != this->instance_int_fields.end() || stat_int_iter != this->cls->getStaticIntFields()->end())
         throw TypeError();
 
     // Check if there is an int field with that name
     map<string, Object*>::iterator it;
     it = this->instance_obj_fields.find(name);
     if(it == this->instance_obj_fields.end()) {
-        it = this->static_obj_fields->find(name);
-        if(it == this->static_obj_fields->end()) {
+        it = this->cls->getStaticObjFields()->find(name);
+        if(it == this->cls->getStaticObjFields()->end()) {
             if(this->super_object == nullptr)
                 throw FieldNotFound();
             else
@@ -140,8 +134,8 @@ void Object::setObj(string name, Object *value) {
 
 void Object::invokeMethod(string name) {
     map<string, Func>::iterator it;
-    it = this->methods->find(name);
-    if(it == this->methods->end()) {
+    it = this->cls->getMethods()->find(name);
+    if(it == this->cls->getMethods()->end()) {
         if(this->super_object == nullptr)
             throw MethodNotFound();
         else

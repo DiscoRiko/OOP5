@@ -17,6 +17,8 @@ private:
 
     map<string, Object*>* static_obj_fields;
 
+    map<string, Func>* methods;
+
 public:
     string name();
 /*
@@ -49,6 +51,12 @@ public:
 	void setObj(std::string name, Object* value);
 
 */
+
+    map<string, int> *getStaticIntFields() const;
+
+    map<string, Object *> *getStaticObjFields() const;
+
+    map<string, Func> *getMethods() const;
 };
 
 #endif /* CLASS_H_ */

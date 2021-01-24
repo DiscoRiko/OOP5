@@ -26,20 +26,11 @@ private:
 
     map<string, Object*> instance_obj_fields;
 
-    map<string, int>* static_int_fields;
-
-    map<string, Object*>* static_obj_fields;
-
-    map<string, Func>* methods;
-
 public:
 
     Object(Class* cls, Object* super_object,
            const list<string>& instance_int_fields,
-           const list<string>& instance_obj_fields,
-           map<string, int>* static_int_fields,
-           map<string, Object*>* static_obj_fields,
-           map<string, Func>* methods);
+           const list<string>& instance_obj_fields);
 
     Class* getClass();
 
