@@ -59,13 +59,13 @@ Field Class::getField(string name) {
         t = OBJECT;
     }
 
-    if(find((*this->static_int_fields).begin(), (*this->static_int_fields).end(), name) != (*this->static_int_fields).end()) {
+    if(this->static_int_fields->find(name) != this->static_int_fields->end()) {
         found = true;
         isStatic = true;
         t = INT;
     }
 
-    if(find((*this->static_obj_fields).begin(), (*this->static_obj_fields).end(), name) != (*this->static_obj_fields).end()) {
+    if(this->static_obj_fields->find(name) != this->static_obj_fields->end()) {
         found = true;
         isStatic = true;
         t = OBJECT;
@@ -82,7 +82,7 @@ Field Class::getField(string name) {
 }
 
 Method Class::getMethod(string name) {
-    if(find((*this->class_methods).begin(), (*this->class_methods).end(), name) != (*this->class_methods).end()) {
+    if(this->class_methods->find(name) != this->class_methods->end()) {
         return Method(name, this->name(), (*this->class_methods)[name]);
     }
     else {
@@ -113,7 +113,7 @@ list<Field> Class::getFields() {
         all_fields.emplace_back(field_pair.first, this->name(), OBJECT, true);
 
     if(this->super_class != nullptr)
-        all_fields.merge(this->super_class->getFields());
+        all_fields.merge(this->super_class->getFields(), naive_comparison<Field>);
 
     return all_fields;
 }
@@ -126,7 +126,7 @@ list<Method> Class::getMethods() {
         all_methods.emplace_back(method_pair.first, this->name(), method_pair.second);
 
     if(this->super_class != nullptr)
-        all_methods.merge(this->super_class->getMethods());
+        all_methods.merge(this->super_class->getMethods(), naive_comparison<Method>);
 
     return all_methods;
 }
@@ -222,4 +222,9 @@ map<string, Object *> *Class::getStaticObjFields() const {
 
 map<string, Func> *Class::getClassMethods() const {
     return this->class_methods;
+}
+
+template<class T>
+bool Class::naive_comparison(T first, T second) {
+    return true;
 }

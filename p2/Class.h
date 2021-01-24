@@ -22,6 +22,9 @@ private:
 
     map<string, Func>* class_methods;
 
+    template<class T>
+    static bool naive_comparison (T first, T second);
+
 public:
 
     Class(Class* c, const string& name);
