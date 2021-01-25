@@ -23,9 +23,16 @@ Class *Class::getSuperClass() {
 }
 
 Object *Class::newInstance() {
-    if(this->super_class == nullptr)
-        return new Object(this, nullptr, this->instance_int_fields, this->instance_obj_fields);
-    return new Object(this, this->super_class->newInstance(), this->instance_int_fields, this->instance_obj_fields);
+    if(this->super_class == nullptr) {
+        //return new Object(this, nullptr, this->instance_int_fields, this->instance_obj_fields);
+        //this->objects_list.emplace_back(this, nullptr, this->instance_int_fields, this->instance_obj_fields);
+        this->objects_list.push_back(new Object(this, nullptr, this->instance_int_fields, this->instance_obj_fields));
+        return this->objects_list.back();
+    }
+
+    //return new Object(this, this->super_class->newInstance(), this->instance_int_fields, this->instance_obj_fields);
+    this->objects_list.push_back(new Object(this, this->super_class->newInstance(), this->instance_int_fields, this->instance_obj_fields));
+    return this->objects_list.back();
 }
 
 void Class::addMethod(string name, Func func) {
@@ -253,4 +260,20 @@ Object *Class::top_current_obj() {
 template<class T>
 bool Class::naive_comparison(T first, T second) {
     return true;
+}
+
+Class::~Class() {
+    // Clearing data structs
+    this->static_int_fields->clear();
+    this->static_obj_fields->clear();
+    this->class_methods->clear();
+
+    for (auto const& obj : this->objects_list) {
+        delete obj;
+    }
+
+    // Deleting all data structures
+    delete this->static_int_fields;
+    delete this->static_obj_fields;
+    delete this->class_methods;
 }

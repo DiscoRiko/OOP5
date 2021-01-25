@@ -1,9 +1,9 @@
 #include <iostream>
-#include "IntList.h"
-#include "MergedIntLists.h"
-#include "ConcatedIntLists.h"
-#include "IntListUtils.h"
-#include "IntListComparators.h"
+#include "../p1/IntList.h"
+#include "../p1/MergedIntLists.h"
+#include "../p1/ConcatedIntLists.h"
+#include "../p1/IntListUtils.h"
+#include "../p1/IntListComparators.h"
 using namespace std;
 
 void testExample();

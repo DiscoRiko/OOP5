@@ -23,6 +23,8 @@ private:
 
     map<string, Func>* class_methods;
 
+    list<Object*> objects_list;
+
     static bool accessible;
 
     static stack<Object*> current_obj;
@@ -79,6 +81,8 @@ public:
     static void pop_current_obj();
 
     static Object* top_current_obj();
+
+    ~Class();
 };
 
 #endif /* CLASS_H_ */
