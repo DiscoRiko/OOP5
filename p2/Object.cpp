@@ -157,7 +157,12 @@ void Object::invokeMethod(string name) {
     }
     else {
         Class::push_current_obj(this);
-        it->second(this);
+        try {
+            it->second(this);
+        } catch (exception) {
+            Class::pop_current_obj();
+            throw;
+        }
         Class::pop_current_obj();
     }
 }
